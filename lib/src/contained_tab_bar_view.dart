@@ -20,11 +20,11 @@ class ContainedTabBarView extends StatefulWidget {
     this.initialIndex = 0,
     this.onChange,
     this.callOnChangeWhileIndexIsChanging = false,
-  })  : assert(
-          tabs.length == views.length,
-          'There has to be an equal amount of tabs (${tabs.length}) and views (${views.length}).',
-        ),
-        super(key: key);
+  }) : assert(
+         tabs.length == views.length,
+         'There has to be an equal amount of tabs (${tabs.length}) and views (${views.length}).',
+       ),
+       super(key: key);
 
   /// Typically a list of two or more widgets which are used as tab buttons.
   ///
@@ -74,12 +74,12 @@ class ContainedTabBarViewState extends State<ContainedTabBarView>
       vsync: this,
       initialIndex: widget.initialIndex,
     )..addListener(() {
-        if (widget.callOnChangeWhileIndexIsChanging ||
-            (!widget.callOnChangeWhileIndexIsChanging &&
-                !_controller.indexIsChanging)) {
-          widget.onChange?.call(_controller.index);
-        }
-      });
+      if (widget.callOnChangeWhileIndexIsChanging ||
+          (!widget.callOnChangeWhileIndexIsChanging &&
+              !_controller.indexIsChanging)) {
+        widget.onChange?.call(_controller.index);
+      }
+    });
   }
 
   /// True while we're animating from previousIndex to index
@@ -91,8 +91,7 @@ class ContainedTabBarViewState extends State<ContainedTabBarView>
     int value, {
     Duration duration = kTabScrollDuration,
     Curve curve = Curves.ease,
-  }) =>
-      _controller.animateTo(value, duration: duration, curve: curve);
+  }) => _controller.animateTo(value, duration: duration, curve: curve);
 
   /// Animates to the next tab.
   void next({
@@ -117,8 +116,9 @@ class ContainedTabBarViewState extends State<ContainedTabBarView>
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) =>
-          _buildFlex(constraints),
+      builder:
+          (BuildContext context, BoxConstraints constraints) =>
+              _buildFlex(constraints),
     );
   }
 
@@ -126,23 +126,22 @@ class ContainedTabBarViewState extends State<ContainedTabBarView>
     return widget.tabBarProperties.position == TabBarPosition.left ||
             widget.tabBarProperties.position == TabBarPosition.right
         ? Row(
-            crossAxisAlignment:
-                _decideAlignment(widget.tabBarProperties.alignment),
-            children: _buildChildren(constraints),
-          )
+          crossAxisAlignment: _decideAlignment(
+            widget.tabBarProperties.alignment,
+          ),
+          children: _buildChildren(constraints),
+        )
         : Column(
-            crossAxisAlignment:
-                _decideAlignment(widget.tabBarProperties.alignment),
-            children: _buildChildren(constraints),
-          );
+          crossAxisAlignment: _decideAlignment(
+            widget.tabBarProperties.alignment,
+          ),
+          children: _buildChildren(constraints),
+        );
   }
 
   List<Widget> _buildChildren(BoxConstraints constraints) {
     List<Widget> children = [
-      Padding(
-        padding: widget.tabBarProperties.margin,
-        child: _buildTabBar(),
-      ),
+      Padding(padding: widget.tabBarProperties.margin, child: _buildTabBar()),
       _buildTabBarView(constraints),
     ];
 
@@ -175,6 +174,11 @@ class ContainedTabBarViewState extends State<ContainedTabBarView>
             labelStyle: widget.tabBarProperties.labelStyle,
             unselectedLabelColor: widget.tabBarProperties.unselectedLabelColor,
             unselectedLabelStyle: widget.tabBarProperties.unselectedLabelStyle,
+            tabAlignment: widget.tabBarProperties.tabAlignment,
+            splashFactory: widget.tabBarProperties.splashFactory,
+            overlayColor: widget.tabBarProperties.overlayColor,
+            dividerColor: widget.tabBarProperties.dividerColor,
+            dividerHeight: widget.tabBarProperties.dividerHeight,
           ),
         ),
       ),
@@ -192,17 +196,11 @@ class ContainedTabBarViewState extends State<ContainedTabBarView>
     switch (widget.tabBarProperties.position) {
       case TabBarPosition.left:
         return Expanded(
-          child: Transform.rotate(
-            angle: -math.pi / 2,
-            child: tabBar,
-          ),
+          child: Transform.rotate(angle: -math.pi / 2, child: tabBar),
         );
       case TabBarPosition.right:
         return Expanded(
-          child: Transform.rotate(
-            angle: math.pi / 2,
-            child: tabBar,
-          ),
+          child: Transform.rotate(angle: math.pi / 2, child: tabBar),
         );
       default:
         return tabBar;
@@ -210,35 +208,38 @@ class ContainedTabBarViewState extends State<ContainedTabBarView>
   }
 
   Widget _buildTabBarView(BoxConstraints constraints) {
-    final EdgeInsets margin =
-        widget.tabBarProperties.margin.resolve(TextDirection.ltr);
+    final EdgeInsets margin = widget.tabBarProperties.margin.resolve(
+      TextDirection.ltr,
+    );
 
     return widget.tabBarProperties.position == TabBarPosition.left ||
             widget.tabBarProperties.position == TabBarPosition.right
-        ? Container(
-            width: constraints.maxWidth -
-                widget.tabBarProperties.height -
-                margin.top -
-                margin.bottom,
-            child: TabBarView(
-              controller: _controller,
-              children: widget.views,
-              dragStartBehavior: widget.tabBarViewProperties.dragStartBehavior,
-              physics: widget.tabBarViewProperties.physics,
-            ),
-          )
-        : Container(
-            height: constraints.maxHeight -
-                widget.tabBarProperties.height -
-                margin.top -
-                margin.bottom,
-            child: TabBarView(
-              controller: _controller,
-              children: widget.views,
-              dragStartBehavior: widget.tabBarViewProperties.dragStartBehavior,
-              physics: widget.tabBarViewProperties.physics,
-            ),
-          );
+        ? SizedBox(
+          width:
+              constraints.maxWidth -
+              widget.tabBarProperties.height -
+              margin.top -
+              margin.bottom,
+          child: TabBarView(
+            controller: _controller,
+            children: widget.views,
+            dragStartBehavior: widget.tabBarViewProperties.dragStartBehavior,
+            physics: widget.tabBarViewProperties.physics,
+          ),
+        )
+        : SizedBox(
+          height:
+              constraints.maxHeight -
+              widget.tabBarProperties.height -
+              margin.top -
+              margin.bottom,
+          child: TabBarView(
+            controller: _controller,
+            children: widget.views,
+            dragStartBehavior: widget.tabBarViewProperties.dragStartBehavior,
+            physics: widget.tabBarViewProperties.physics,
+          ),
+        );
   }
 
   CrossAxisAlignment _decideAlignment(TabBarAlignment alignment) {
@@ -249,8 +250,6 @@ class ContainedTabBarViewState extends State<ContainedTabBarView>
         return CrossAxisAlignment.center;
       case TabBarAlignment.end:
         return CrossAxisAlignment.end;
-      default:
-        return CrossAxisAlignment.center;
     }
   }
 

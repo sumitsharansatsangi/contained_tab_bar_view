@@ -22,6 +22,11 @@ class TabBarProperties {
     this.labelStyle,
     this.unselectedLabelColor,
     this.unselectedLabelStyle,
+    this.tabAlignment,
+    this.splashFactory,
+    this.overlayColor,
+    this.dividerColor,
+    this.dividerHeight,
   });
 
   /// The width of the [TabBar].
@@ -107,4 +112,15 @@ class TabBarProperties {
   ///
   /// See [TabBar documentation](https://api.flutter.dev/flutter/material/TabBar/unselectedLabelStyle.html).
   final TextStyle? unselectedLabelStyle;
+
+
+  final TabAlignment? tabAlignment;
+
+  final InteractiveInkFeatureFactory? splashFactory;
+
+  final WidgetStateProperty<Color?>? overlayColor;
+
+  final Color? dividerColor;
+
+  final double? dividerHeight;
 }

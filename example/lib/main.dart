@@ -203,7 +203,7 @@ class Example5 extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(8.0)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.4),
+                      color: Colors.black.withAlpha(102),
                       spreadRadius: 0.5,
                       blurRadius: 2,
                       offset: Offset(1, -1),
@@ -352,7 +352,7 @@ class Example8 extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(8.0)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.4),
+                      color: Colors.black.withAlpha(104),
                       spreadRadius: 0.5,
                       blurRadius: 2,
                       offset: Offset(1, -1),

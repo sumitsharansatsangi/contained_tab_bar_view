@@ -5,14 +5,14 @@ homepage: https://github.com/slovnicki/contained_tab_bar_view
 repository: https://github.com/slovnicki/contained_tab_bar_view
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.17.0"
+  sdk: ">=3.7.0 <4.0.0"
+  flutter: ">=3.27.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  container_tab_indicator: ^0.3.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  lints: ^5.1.1
